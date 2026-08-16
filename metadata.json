@@ -1,0 +1,6 @@
+{
+  "name": "Socialator",
+  "description": "Facebook Open Graph link preview creator and shareable link generator with live preview and saved designs library.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
