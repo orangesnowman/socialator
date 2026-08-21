@@ -4,7 +4,7 @@
  */
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Save, Upload, Link as LinkIcon, Check, Copy, ExternalLink } from 'lucide-react';
+import { Save, Upload, Link as LinkIcon, Check, Copy, ExternalLink, X } from 'lucide-react';
 import { Design, Language } from './types';
 import { getTranslation } from './translations';
 import { INITIAL_DESIGNS } from './data/initialDesigns';
@@ -180,6 +180,20 @@ export default function App() {
     setTimeout(() => setCopiedShareLink(false), 2500);
   };
 
+  const handleCloseApp = () => {
+    window.close();
+
+    // Browsers may block window.close() for tabs they do not consider
+    // script-opened. In that case, reliably leave the app instead.
+    window.setTimeout(() => {
+      if (window.history.length > 1) {
+        window.history.back();
+      } else {
+        window.location.replace('about:blank');
+      }
+    }, 100);
+  };
+
   return (
     <div className="min-h-screen bg-white text-slate-900 font-sans antialiased selection:bg-slate-200">
       {/* Hidden File Input for Image Upload */}
@@ -213,9 +227,18 @@ export default function App() {
             </p>
           </div>
 
-          {/* Language Switch Toggle */}
-          <div className="pt-1">
+          <div className="pt-1 flex items-center gap-2">
             <LanguageToggle language={language} onToggle={setLanguage} />
+            <button
+              type="button"
+              onClick={handleCloseApp}
+              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 text-slate-500 transition hover:border-slate-300 hover:bg-slate-100 hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2"
+              title="Close app"
+              aria-label="Close app"
+              id="close-app-button"
+            >
+              <X className="h-4 w-4" aria-hidden="true" />
+            </button>
           </div>
         </header>
 
